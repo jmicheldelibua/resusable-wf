@@ -44,6 +44,7 @@ jobs:
     steps:
       - name: Logging data
         run: |
-            echo "We are in env: ${{ inputs.current-env }}"
+            echo " ${{ needs.versioning.outputs.version }}"
+            echo "We are in env: ${{ inputs.current-env }} in ${{ matrix.path }} and ${{ matrix.name }}"
             echo "Secret_Key values is: ${{ secrets.SECRET_KEY }} (${{ inputs.current-env }})"
-            echo "VAR_KEY value is : ${{ env.VAR_KEY }} (${{ inputs.current-env }})"
+            echo "VAR_KEY value is : ${{ vars.VAR_KEY }} (${{ inputs.current-env }})"
