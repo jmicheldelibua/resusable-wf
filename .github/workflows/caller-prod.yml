@@ -1,0 +1,15 @@
+name: "Caller Prod"
+
+on:
+  release:
+    types:
+      - published
+
+jobs:
+  ReuseableMatrixJobForDeployment:
+    strategy:
+      matrix:
+        target: [staging, production]
+    uses: "./.github/workflows/called.yml"
+    with:
+      current-env: ${{ matrix.target }}
