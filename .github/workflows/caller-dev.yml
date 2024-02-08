@@ -37,9 +37,13 @@ jobs:
     strategy:
       matrix:
         target: [development]
+        app: ${{ fromJson(needs.applications.outputs.config) }}
+        include:
+          - version: ${{ needs.versioning.outputs.version }}
+
     needs: ["versioning", "applications"]
     uses: "./.github/workflows/called.yml"
     with:
       current-env: ${{ matrix.target }}
-      version: ${{ needs.versioning.outputs.version }}
-      applications: ${{ needs.applications.outputs.config }}
+      version: ${{ needs.versioning.outputs.version }}-${{ matrix.target }}
+      application: ${{ matrix.app }}
