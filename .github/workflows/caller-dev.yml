@@ -45,5 +45,5 @@ jobs:
     with:
       current-env: ${{ matrix.target }}
       version: ${{ matrix.version }}-${{ matrix.target }}
-      app-path: ${{ matrix.application.name }}
-      app-name: ${{ matrix.application.path }}
+      app-path: ${{ matrix.application.path }}
+      app-name: ${{ matrix.application.name }}
