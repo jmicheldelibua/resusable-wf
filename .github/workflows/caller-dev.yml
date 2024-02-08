@@ -29,8 +29,7 @@ jobs:
             del(.projects.common)
             | .projects
             | to_entries
-            | map({ name: .key, path: .value.root })
-            ' nest-cli.json)" >> "$GITHUB_OUTPUT"
+            | map({ name: .key, path: .value.root })' nest-cli.json)" >> "$GITHUB_OUTPUT"
 
   ReusableWorkflow:
     name: Build and Deploy (${{ matrix.target }})
@@ -46,5 +45,5 @@ jobs:
     with:
       current-env: ${{ matrix.target }}
       version: ${{ matrix.version }}-${{ matrix.target }}
-      path: ${{ matrix.application.name }}
-      name: ${{ matrix.application.path }}
+      app-path: ${{ matrix.application.name }}
+      app-name: ${{ matrix.application.path }}
