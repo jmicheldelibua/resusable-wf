@@ -33,6 +33,7 @@ jobs:
             | { include: . }' nest-cli.json)" >> "$GITHUB_OUTPUT"
 
   BuildAndDeployReusable:
+    name: Build and Deploy (${{ matrix.target }})
     strategy:
       matrix:
         target: [staging, production]
