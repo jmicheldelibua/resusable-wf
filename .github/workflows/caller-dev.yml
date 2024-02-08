@@ -30,14 +30,14 @@ jobs:
             | .projects
             | to_entries
             | map({ name: .key, path: .value.root })
-            | { include: . }' nest-cli.json)" >> "$GITHUB_OUTPUT"
+            ' nest-cli.json)" >> "$GITHUB_OUTPUT"
 
   ReusableWorkflow:
     name: Build and Deploy (${{ matrix.target }})
     strategy:
       matrix:
         target: [development]
-        app: ${{ fromJson(needs.applications.outputs.config) }}
+        application: ${{ fromJson(needs.applications.outputs.config) }}
         include:
           - version: ${{ needs.versioning.outputs.version }}
 
@@ -45,5 +45,5 @@ jobs:
     uses: "./.github/workflows/called.yml"
     with:
       current-env: ${{ matrix.target }}
-      version: ${{ needs.versioning.outputs.version }}-${{ matrix.target }}
-      application: ${{ matrix.app }}
+      version: ${{ matrix.version }}-${{ matrix.target }}
+      application: ${{ matrix.application }}
