@@ -6,45 +6,24 @@ on:
       current-env:
         required: true
         type: string
+      version:
+        required: true
+        type: string
+      applications:
+        required: true
+        type: string
 
 jobs:
-  versioning:
-    name: Versioning
-    outputs:
-      version: ${{ steps.command.outputs.version }}
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - id: command
-        run: echo "version=$(jq -r '.version' package.json)-${{ inputs.current-env }}" >> "$GITHUB_OUTPUT"
-
-  applications:
-    name: Get apps
-    runs-on: ubuntu-latest
-    outputs:
-      config: ${{ steps.config.outputs.config }}
-    steps:
-      - uses: actions/checkout@v4
-      - id: config
-        run: |
-          echo "config=$(jq -c '
-            del(.projects.common)
-            | .projects
-            | to_entries
-            | map({ name: .key, path: .value.root })
-            | { include: . }' nest-cli.json)" >> "$GITHUB_OUTPUT"
-
   reusable_workflow_job:
     runs-on: ubuntu-latest
     environment: ${{ inputs.current-env }}
-    needs: ['applications', 'versioning']
     strategy:
-      matrix: ${{ fromJson(needs.applications.outputs.config) }}
+      matrix: ${{ fromJson(inputs.applications) }}
       max-parallel: 4
     steps:
       - name: Logging data
         run: |
-            echo " ${{ needs.versioning.outputs.version }}"
+            echo "version: ${{ inputs.version }}-${{ inputs.current-env }}"
             echo "We are in env: ${{ inputs.current-env }} in ${{ matrix.path }} and ${{ matrix.name }}"
             echo "Secret_Key values is: ${{ secrets.SECRET_KEY }} (${{ inputs.current-env }})"
             echo "VAR_KEY value is : ${{ vars.VAR_KEY }} (${{ inputs.current-env }})"
