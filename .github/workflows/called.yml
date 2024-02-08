@@ -9,22 +9,22 @@ on:
       version:
         required: true
         type: string
-      applications:
+      app-path:
+        required: true
+        type: string
+      app-name:
         required: true
         type: string
 
 jobs:
   reusable_workflow_job:
-    name: ${{ matrix.name }} app for ${{ inputs.current-env }}  
+    name: ${{ inputs.app-name }} app for ${{ inputs.current-env }}  
     runs-on: ubuntu-latest
     environment: ${{ inputs.current-env }}
-    strategy:
-      matrix: ${{ fromJson(inputs.applications) }}
-      max-parallel: 4
     steps:
       - name: Logging data
         run: |
-            echo "version: ${{ inputs.version }}-${{ inputs.current-env }}"
-            echo "We are in env: ${{ inputs.current-env }} in ${{ matrix.path }} and ${{ matrix.name }}"
+            echo "version: ${{ inputs.version }}"
+            echo "We are in env: ${{ inputs.current-env }} in ${{ inputs.app-path }} and ${{ inputs.app-name }}"
             echo "Secret_Key values is: ${{ secrets.SECRET_KEY }} (${{ inputs.current-env }})"
             echo "VAR_KEY value is : ${{ vars.VAR_KEY }} (${{ inputs.current-env }})"

@@ -29,17 +29,21 @@ jobs:
             del(.projects.common)
             | .projects
             | to_entries
-            | map({ name: .key, path: .value.root })
-            | { include: . }' nest-cli.json)" >> "$GITHUB_OUTPUT"
+            | map({ name: .key, path: .value.root })' nest-cli.json)" >> "$GITHUB_OUTPUT"
 
-  BuildAndDeployReusable:
+  ReusableWorkflow:
     name: Build and Deploy (${{ matrix.target }})
     strategy:
       matrix:
-        target: [staging, production]
+        target: [production-caribemedia, production-axesa]
+        application: ${{ fromJson(needs.applications.outputs.config) }}
+        include:
+          - version: ${{ needs.versioning.outputs.version }}
+
     needs: ["versioning", "applications"]
     uses: "./.github/workflows/called.yml"
     with:
       current-env: ${{ matrix.target }}
-      version: ${{ needs.versioning.outputs.version }}
-      applications: ${{ needs.applications.outputs.config }}
+      version: ${{ matrix.version }}-${{ matrix.target }}
+      app-path: ${{ matrix.application.path }}
+      app-name: ${{ matrix.application.name }}
