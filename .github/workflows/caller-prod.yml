@@ -6,10 +6,39 @@ on:
       - published
 
 jobs:
-  ReuseableMatrixJobForDeployment:
+  versioning:
+    name: Versioning
+    outputs:
+      version: ${{ steps.command.outputs.version }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - id: command
+        run: echo "version=$(jq -r '.version' package.json)" >> "$GITHUB_OUTPUT"
+
+  applications:
+    name: Get apps
+    runs-on: ubuntu-latest
+    outputs:
+      config: ${{ steps.config.outputs.config }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: config
+        run: |
+          echo "config=$(jq -c '
+            del(.projects.common)
+            | .projects
+            | to_entries
+            | map({ name: .key, path: .value.root })
+            | { include: . }' nest-cli.json)" >> "$GITHUB_OUTPUT"
+
+  BuildAndDeployReusable:
     strategy:
       matrix:
         target: [staging, production]
+    needs: ["versioning", "applications"]
     uses: "./.github/workflows/called.yml"
     with:
       current-env: ${{ matrix.target }}
+      version: ${{ needs.versioning.outputs.version }}
+      applications: ${{ needs.applications.outputs.config }}
