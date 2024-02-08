@@ -32,7 +32,8 @@ jobs:
             | map({ name: .key, path: .value.root })
             | { include: . }' nest-cli.json)" >> "$GITHUB_OUTPUT"
 
-  BuildAndDeployReusable:
+  ReusableWorkflow:
+    name: Build and Deploy (${{ matrix.target }})
     strategy:
       matrix:
         target: [development]
