@@ -15,7 +15,7 @@ on:
 
 jobs:
   reusable_workflow_job:
-    name: Micro ${{ matrix.name }} for ${{ inputs.current-env }}  
+    name: ${{ matrix.name }} app for ${{ inputs.current-env }}  
     runs-on: ubuntu-latest
     environment: ${{ inputs.current-env }}
     strategy:
