@@ -15,6 +15,7 @@ on:
 
 jobs:
   reusable_workflow_job:
+    name: Build and Deploy - ${{ matrix.name }}" for ${{ inputs.current-env }}  
     runs-on: ubuntu-latest
     environment: ${{ inputs.current-env }}
     strategy:
