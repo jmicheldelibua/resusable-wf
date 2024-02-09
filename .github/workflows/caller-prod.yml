@@ -67,3 +67,4 @@ jobs:
       AZURE_CREDS: ${{ matrix.AZURE_CREDS }}
       CLUSTER_NAME: ${{ matrix.CLUSTER_NAME }}
       CLUSTER_RESOURCE_GROUP: ${{ matrix.CLUSTER_RESOURCE_GROUP }}
+    secrets: inherit
