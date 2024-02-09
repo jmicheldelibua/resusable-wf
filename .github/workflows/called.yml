@@ -12,10 +12,28 @@ on:
       applications:
         required: true
         type: string
+      ACR_REGISTRY:
+        required: true
+        type: string
+      ACR_USERNAME:
+        required: true
+        type: string
+      ACR_PASSWORD:
+        required: true
+        type: string
+      AZURE_CREDS:
+        required: true
+        type: string
+      CLUSTER_NAME:
+        required: true
+        type: string
+      CLUSTER_RESOURCE_GROUP:
+        required: true
+        type: string
 
 jobs:
   reusable_workflow_job:
-    name: ${{ matrix.name }} app for ${{ inputs.current-env }}  
+    name: ${{ matrix.name }} app for ${{ inputs.current-env }}
     runs-on: ubuntu-latest
     environment: ${{ inputs.current-env }}
     strategy:
@@ -24,7 +42,13 @@ jobs:
     steps:
       - name: Logging data
         run: |
-            echo "version: ${{ inputs.version }}-${{ inputs.current-env }}"
-            echo "We are in env: ${{ inputs.current-env }} in ${{ matrix.path }} and ${{ matrix.name }}"
-            echo "Secret_Key values is: ${{ secrets.SECRET_KEY }} (${{ inputs.current-env }})"
-            echo "VAR_KEY value is : ${{ vars.VAR_KEY }} (${{ inputs.current-env }})"
+          echo "Let's see: ACR_REGISTRY ${{ inputs.ACR_REGISTRY }}"
+          echo "Let's see: ACR_USERNAME ${{ inputs.ACR_USERNAME }}"
+          echo "Let's see: ACR_PASSWORD ${{ inputs.ACR_PASSWORD }}"
+          echo "Let's see: AZURE_CREDS ${{ inputs.AZURE_CREDS }}"
+          echo "Let's see: CLUSTER_NAME ${{ inputs.CLUSTER_NAME }}"
+          echo "Let's see: CLUSTER_RESOURCE_GROUP ${{ inputs.CLUSTER_RESOURCE_GROUP }}"
+          echo "version: ${{ inputs.version }}-${{ inputs.current-env }}"
+          echo "We are in env: ${{ inputs.current-env }} in ${{ matrix.path }} and ${{ matrix.name }}"
+          echo "Secret_Key values is: ${{ secrets.SECRET_KEY }} (${{ inputs.current-env }})"
+          echo "VAR_KEY value is : ${{ vars.VAR_KEY }} (${{ inputs.current-env }})"
