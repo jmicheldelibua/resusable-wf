@@ -1,9 +1,11 @@
 name: "Caller Prod"
 
 on:
-  release:
-    types:
-      - published
+  push:
+    branches:
+      - "*stable*"
+    paths:
+      - "./github/workflows/caller-prod.yml"
 
 jobs:
   versioning:
@@ -37,9 +39,31 @@ jobs:
     strategy:
       matrix:
         target: [staging, production]
+        include:
+          - target: staging
+            ACR_REGISTRY: YP_ACR_REGISTRY_DV
+            ACR_USERNAME: YP_ACR_USERNAME_DV
+            ACR_PASSWORD: YP_ACR_PASSWORD_DV
+            AZURE_CREDS: YP_AZURE_CREDS_DV
+            CLUSTER_NAME: YP_CLUSTER_NAME_DV
+            CLUSTER_RESOURCE_GROUP: YP_CLUSTER_RESOURCE_GROUP_DV
+          - target: production
+            ACR_REGISTRY: YP_ACR_REGISTRY_DV
+            ACR_USERNAME: YP_ACR_USERNAME_DV
+            ACR_PASSWORD: YP_ACR_PASSWORD_DV
+            AZURE_CREDS: YP_AZURE_CREDS_DV
+            CLUSTER_NAME: YP_CLUSTER_NAME_DV
+            CLUSTER_RESOURCE_GROUP: YP_CLUSTER_RESOURCE_GROUP_DV
+
     needs: ["versioning", "applications"]
     uses: "./.github/workflows/called.yml"
     with:
       current-env: ${{ matrix.target }}
       version: ${{ needs.versioning.outputs.version }}
       applications: ${{ needs.applications.outputs.config }}
+      ACR_REGISTRY: ${{ matrix.ACR_REGISTRY }}
+      ACR_USERNAME: ${{ matrix.ACR_USERNAME }}
+      ACR_PASSWORD: ${{ matrix.ACR_PASSWORD }}
+      AZURE_CREDS: ${{ matrix.AZURE_CREDS }}
+      CLUSTER_NAME: ${{ matrix.CLUSTER_NAME }}
+      CLUSTER_RESOURCE_GROUP: ${{ matrix.CLUSTER_RESOURCE_GROUP }}
