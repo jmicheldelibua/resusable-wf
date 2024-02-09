@@ -38,16 +38,16 @@ jobs:
     name: Build and Deploy (${{ matrix.target }})
     strategy:
       matrix:
-        target: [staging, production]
+        target: [production-axesa, production-caribemedia]
         include:
-          - target: staging
+          - target: production-axesa
             ACR_REGISTRY: YP_ACR_REGISTRY_AX
             ACR_USERNAME: YP_ACR_USERNAME_AX
             ACR_PASSWORD: YP_ACR_PASSWORD_AX
             AZURE_CREDS: YP_AZURE_CREDS_AX
             CLUSTER_NAME: YP_CLUSTER_NAME_AX
             CLUSTER_RESOURCE_GROUP: YP_CLUSTER_RESOURCE_GROUP_AX
-          - target: production
+          - target: production-caribemedia
             ACR_REGISTRY: YP_ACR_REGISTRY_RD
             ACR_USERNAME: YP_ACR_USERNAME_RD
             ACR_PASSWORD: YP_ACR_PASSWORD_RD
