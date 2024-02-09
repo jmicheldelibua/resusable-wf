@@ -41,19 +41,19 @@ jobs:
         target: [staging, production]
         include:
           - target: staging
-            ACR_REGISTRY: YP_ACR_REGISTRY_DV
-            ACR_USERNAME: YP_ACR_USERNAME_DV
-            ACR_PASSWORD: YP_ACR_PASSWORD_DV
-            AZURE_CREDS: YP_AZURE_CREDS_DV
-            CLUSTER_NAME: YP_CLUSTER_NAME_DV
-            CLUSTER_RESOURCE_GROUP: YP_CLUSTER_RESOURCE_GROUP_DV
+            ACR_REGISTRY: YP_ACR_REGISTRY_AX
+            ACR_USERNAME: YP_ACR_USERNAME_AX
+            ACR_PASSWORD: YP_ACR_PASSWORD_AX
+            AZURE_CREDS: YP_AZURE_CREDS_AX
+            CLUSTER_NAME: YP_CLUSTER_NAME_AX
+            CLUSTER_RESOURCE_GROUP: YP_CLUSTER_RESOURCE_GROUP_AX
           - target: production
-            ACR_REGISTRY: YP_ACR_REGISTRY_DV
-            ACR_USERNAME: YP_ACR_USERNAME_DV
-            ACR_PASSWORD: YP_ACR_PASSWORD_DV
-            AZURE_CREDS: YP_AZURE_CREDS_DV
-            CLUSTER_NAME: YP_CLUSTER_NAME_DV
-            CLUSTER_RESOURCE_GROUP: YP_CLUSTER_RESOURCE_GROUP_DV
+            ACR_REGISTRY: YP_ACR_REGISTRY_RD
+            ACR_USERNAME: YP_ACR_USERNAME_RD
+            ACR_PASSWORD: YP_ACR_PASSWORD_RD
+            AZURE_CREDS: YP_AZURE_CREDS_RD
+            CLUSTER_NAME: YP_CLUSTER_NAME_RD
+            CLUSTER_RESOURCE_GROUP: YP_CLUSTER_RESOURCE_GROUP_RD
 
     needs: ["versioning", "applications"]
     uses: "./.github/workflows/called.yml"
