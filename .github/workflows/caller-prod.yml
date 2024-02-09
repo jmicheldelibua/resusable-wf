@@ -5,7 +5,7 @@ on:
     branches:
       - "*stable*"
     paths:
-      - "./github/workflows/caller-prod.yml"
+      - ".github/workflows/caller-prod.yml"
 
 jobs:
   versioning:

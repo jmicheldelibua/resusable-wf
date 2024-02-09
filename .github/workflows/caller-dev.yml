@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - "*stable*"
+    paths:
+      - ".github/workflows/caller-dev.yml"
 
 jobs:
   versioning:
