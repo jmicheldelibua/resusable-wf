@@ -3,7 +3,7 @@ name: "Caller Prod"
 on:
   push:
     branches:
-      - "*stabl*"
+      - "*stable*"
     paths:
       - ".github/workflows/caller-prod.yml"
 

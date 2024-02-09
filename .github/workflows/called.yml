@@ -45,6 +45,8 @@ jobs:
           echo "Let's see: ACR_REGISTRY ${{ inputs.ACR_REGISTRY }}"
           echo "Let's see: SECRETS[ACR_REGISTRY] ${{ secrets[inputs.ACR_REGISTRY] }}"
           echo "Let's see: VARS[ACR_REGISTRY] ${{ vars[inputs.ACR_REGISTRY] }}"
+          echo "Let's see: VARS.YP_ACR_REGISTRY_AX ${{ vars.YP_ACR_REGISTRY_AX }}"
+          echo "Let's see: VARS.YP_ACR_REGISTRY_RD ${{ vars.YP_ACR_REGISTRY_RD }}"
           echo "Let's see: ACR_USERNAME ${{ inputs.ACR_USERNAME }}"
           echo "Let's see: ACR_PASSWORD ${{ inputs.ACR_PASSWORD }}"
           echo "Let's see: AZURE_CREDS ${{ inputs.AZURE_CREDS }}"
